@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-/**
+/*
  * We're no strangers to love
  * You know the rules and so do I
  * A full commitment's what I'm thinking of
@@ -48,4 +48,4 @@ public class MainActivity extends AppCompatActivity {
  * You're too shy to say it
  * Inside we both know what's been going on
  * You know the game and we're gonna play it
- **/
+ */
