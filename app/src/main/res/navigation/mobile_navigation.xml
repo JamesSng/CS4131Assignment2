@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_person">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_person"
         android:name="com.example.assignment2.ui.person.PersonFragment"
-        android:label="@string/title_home"
+        android:label="Check In"
         tools:layout="@layout/fragment_person" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_admin"
         android:name="com.example.assignment2.ui.admin.AdminFragment"
-        android:label="@string/title_dashboard"
+        android:label="Admin"
         tools:layout="@layout/fragment_admin" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_clinic"
         android:name="com.example.assignment2.ui.clinic.ClinicFragment"
-        android:label="@string/title_notifications"
+        android:label="Clinic"
         tools:layout="@layout/fragment_clinic" />
 </navigation>
