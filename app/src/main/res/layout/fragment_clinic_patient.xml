@@ -68,25 +68,25 @@
         app:layout_constraintTop_toBottomOf="@+id/vaccineStatusHeader">
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/unvaccinatedRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Unvaccinated" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/firstShotRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Vaccinated (First Shot)" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
+            android:id="@+id/vaccinatedRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Vaccinated" />
 
         <RadioButton
-            android:id="@+id/radioButton6"
+            android:id="@+id/recoveredRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recovered" />
