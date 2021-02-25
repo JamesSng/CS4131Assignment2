@@ -6,4 +6,10 @@
     <string name="title_check_in">Check In</string>
     <string name="title_admin">Admin</string>
     <string name="title_clinic">Clinic</string>
+    <string name="user_login">User Login</string>
+    <string name="password">Password</string>
+    <string name="ic_no">IC No.</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="admin_login">Admin Login</string>
 </resources>

@@ -48,4 +48,11 @@ public class MainActivity extends AppCompatActivity {
  * You're too shy to say it
  * Inside we both know what's been going on
  * You know the game and we're gonna play it
+ *
+ * And if you ask me how I'm feeling
+ * Tell me you're too blind to see
+ *
+ * Never gonna give you up
+ * Never gonna let you down
+ *
  */
