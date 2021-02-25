@@ -9,7 +9,11 @@
         android:id="@+id/navigation_person"
         android:name="com.example.assignment2.ui.person.PersonFragment"
         android:label="Check In"
-        tools:layout="@layout/fragment_person" />
+        tools:layout="@layout/fragment_person" >
+        <action
+            android:id="@+id/action_navigation_person_to_personalAccountFragment"
+            app:destination="@id/personalAccountFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_admin"
@@ -22,4 +26,9 @@
         android:name="com.example.assignment2.ui.clinic.ClinicFragment"
         android:label="Clinic"
         tools:layout="@layout/fragment_clinic" />
+    <fragment
+        android:id="@+id/personalAccountFragment"
+        android:name="com.example.assignment2.ui.person.PersonalAccountFragment"
+        android:label="personal_account_fragment"
+        tools:layout="@layout/personal_account_fragment" />
 </navigation>

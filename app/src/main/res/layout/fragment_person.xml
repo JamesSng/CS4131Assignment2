@@ -87,14 +87,14 @@
                     android:layout_height="match_parent">
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/loginButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
                         android:text="@string/login" />
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/registerButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center"

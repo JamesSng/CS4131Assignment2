@@ -50,9 +50,20 @@ public class MainActivity extends AppCompatActivity {
  * You know the game and we're gonna play it
  *
  * And if you ask me how I'm feeling
- * Tell me you're too blind to see
+ * Don't tell me you're too blind to see
  *
  * Never gonna give you up
  * Never gonna let you down
+ * Never gonna run around and desert you
+ * Never gonna make you cry
+ * Never gonna say goodbye
+ * Never gonna tell a lie and hurt you
  *
+ * Ooooh, give you up
+ * Ooooh, give you up
+ * Never gonna give
+ * Never gonna give, give you up
+ * Ooooh
+ * Never gonna give
+ * Never gonan give
  */
