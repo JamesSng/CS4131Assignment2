@@ -43,4 +43,28 @@ public class PersonDatabase {
         }
         return LOGIN_SUCCESSFUL;
     }
+
+    public void setUnvaccinated(){
+        currentUser.setUnvaccinated();
+        dbRef.child(currentUser.getIcNumber()).child("vaccineStatus")
+                .setValue(currentUser.getVaccineStatus());
+    }
+
+    public void setFirstShot(){
+        currentUser.setFirstShot();
+        dbRef.child(currentUser.getIcNumber()).child("vaccineStatus")
+                .setValue(currentUser.getVaccineStatus());
+    }
+
+    public void setVaccinated(){
+        currentUser.setVaccinated();
+        dbRef.child(currentUser.getIcNumber()).child("vaccineStatus")
+                .setValue(currentUser.getVaccineStatus());
+    }
+
+    public void setRecovered(){
+        currentUser.setRecovered();
+        dbRef.child(currentUser.getIcNumber()).child("vaccineStatus")
+                .setValue(currentUser.getVaccineStatus());
+    }
 }
