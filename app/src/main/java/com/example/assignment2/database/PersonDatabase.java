@@ -20,7 +20,7 @@ public class PersonDatabase {
     public static int INVALID_PASSWORD = 2;
     Person currentUser;
 
-    public boolean getUser(String icNumber){
+    public boolean setCurrentUser(String icNumber){
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -36,10 +36,11 @@ public class PersonDatabase {
     }
 
     public int login(String icNumber, String password){
-        if (!getUser(icNumber)) return INVALID_IC_NUMBER;
-        //TODO
+        if (!setCurrentUser(icNumber)) return INVALID_IC_NUMBER;
+        if (!currentUser.getPassword().equals(password)){
+            currentUser = null;
+            return INVALID_PASSWORD;
+        }
         return LOGIN_SUCCESSFUL;
     }
-
-
 }
