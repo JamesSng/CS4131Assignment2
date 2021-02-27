@@ -24,7 +24,7 @@ public class PersonDatabase {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentUser = snapshot.child("icNumber").getValue(Person.class);
+                currentUser = snapshot.child(icNumber).getValue(Person.class);
             }
 
             @Override
