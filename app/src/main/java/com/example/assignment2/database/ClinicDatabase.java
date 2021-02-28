@@ -31,7 +31,7 @@ public class ClinicDatabase {
     }
 
     public void loadDB(String str){
-        String[] clinicArr = str.split(";");
+        String[] clinicArr = str.split("\n");
         for (String clinic: clinicArr){
             String[] details = clinic.split(",");
             Clinic c = new Clinic(details[0], details[1]);

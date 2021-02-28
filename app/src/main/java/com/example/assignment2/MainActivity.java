@@ -10,6 +10,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +30,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    public String readFile(String filename) throws IOException{
+        InputStreamReader inputStreamReader = new InputStreamReader(getAssets().open(filename));
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        StringBuilder stringBuffer = new StringBuilder();
+        String lines;
+        while ((lines = bufferedReader.readLine()) != null){
+            stringBuffer.append(lines).append("\n");
+        }
+        inputStreamReader.close();
+        bufferedReader.close();
+        return stringBuffer.toString().trim();
     }
 }
 

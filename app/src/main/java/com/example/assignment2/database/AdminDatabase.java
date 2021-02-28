@@ -31,7 +31,7 @@ public class AdminDatabase {
     }
 
     public void loadDB(String str){
-        String[] adminArr = str.split(";");
+        String[] adminArr = str.split("\n");
         for (String admin : adminArr){
             String[] details = admin.split(",");
             Admin a = new Admin(details[0], details[1]);
