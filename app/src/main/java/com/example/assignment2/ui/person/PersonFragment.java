@@ -1,20 +1,20 @@
 package com.example.assignment2.ui.person;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.assignment2.R;
+import com.example.assignment2.model.Pair;
+import com.example.assignment2.ui.person.account.PersonActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 public class PersonFragment extends Fragment {
 
@@ -24,17 +24,18 @@ public class PersonFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         personViewModel =
                 new ViewModelProvider(this).get(PersonViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_person, container, false);
+        View root = inflater.inflate(R.layout.fragment_person_login, container, false);
 
         root.findViewById(R.id.loginButton).setOnClickListener(view -> {
             String username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
             String password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
             Pair<Boolean, String> p = validateLogin(username, password);
             if(p.t){
-                System.out.println(p.u);
-                System.out.println("Logging you in...");
+                Intent intent = new Intent(getContext(), PersonActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
             } else {
-                System.out.println(p.u);
+                Snackbar.make(root, p.u, Snackbar.LENGTH_SHORT);
             }
         });
 
@@ -43,13 +44,15 @@ public class PersonFragment extends Fragment {
             String password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
             Pair<Boolean, String> p = validateRegistration(username, password);
             if(p.t){
-                System.out.println(p.u);
-                System.out.println("Registering your account...");
+                addToFirebase(username, password);
+                Intent intent = new Intent(getContext(), PersonActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
             } else {
-                System.out.println(p.u);
+                Snackbar.make(root, p.u, Snackbar.LENGTH_SHORT);
             }
         });
-        /*final TextView textView = root.findViewById(R.id.text_home);
+        /*
         personViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -59,8 +62,15 @@ public class PersonFragment extends Fragment {
         return root;
     }
 
+    private void addToFirebase(String username, String password){
+        /**
+         * TODO
+         * */
+    }
+
     private Pair<Boolean, String> validateLogin(String username, String password){
         /**
+         * TODO
          * If username/IC is not found in the database, return false
          * If the username/IC has not been registered, return false
          * return true
@@ -70,20 +80,11 @@ public class PersonFragment extends Fragment {
 
     private Pair<Boolean, String> validateRegistration(String username, String password){
         /**
+         * TODO
          * If username/IC is not found in the database, return false
          * If the username/IC has been registered, return false
          * return true
          */
         return new Pair<>(true, "Welcome!");
-    }
-}
-
-class Pair<T, U> {
-    public final T t;
-    public final U u;
-
-    public Pair(T t, U u) {
-        this.t= t;
-        this.u= u;
     }
 }
