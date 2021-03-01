@@ -44,19 +44,6 @@ public class AdminFragment extends Fragment {
             }
         });
 
-        root.findViewById(R.id.registerButton).setOnClickListener(view -> {
-            String username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
-            String password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
-            Pair<Boolean, String> p = validateRegistration(username, password);
-            if(p.t){
-                addToFirebase(username, password);
-                //Intent intent = new Intent(getContext(), PersonActivity.class);
-                //intent.putExtra("username", username);
-                //startActivity(intent);
-            } else {
-                Snackbar.make(root, p.u, Snackbar.LENGTH_SHORT);
-            }
-        });
         return root;
     }
 
