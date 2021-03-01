@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String readFile(String filename) throws IOException{
-        InputStreamReader inputStreamReader = new InputStreamReader(getAssets().open(filename));
+        InputStreamReader inputStreamReader = new InputStreamReader(getResources().getAssets().open(filename));
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         StringBuilder stringBuffer = new StringBuilder();
         String lines;

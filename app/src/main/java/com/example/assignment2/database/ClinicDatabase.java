@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ClinicDatabase {
 
-    ArrayList<Clinic> clinics;
+    ArrayList<Clinic> clinics = new ArrayList<>();
     Clinic currentClinic;
 
     public static int LOGIN_SUCCESSFUL = 0;
