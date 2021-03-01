@@ -4,7 +4,6 @@ public class Person {
 
     private String icNumber, name;
     private String password;
-    private boolean passwordSet;
     private int vaccineStatus;
     public static final int UNVACCINATED = 0;
     public static final int FIRST_SHOT = 1;
@@ -15,7 +14,6 @@ public class Person {
         this.icNumber = icNumber;
         this.name = name;
         this.vaccineStatus = UNVACCINATED;
-        this.passwordSet = false;
     }
 
     public Person(String icNumber, String name, int vaccineStatus, String password){
@@ -23,7 +21,6 @@ public class Person {
         this.name = name;
         this.vaccineStatus = vaccineStatus;
         this.password = password;
-        this.passwordSet = true;
     }
 
     public String getIcNumber() {
@@ -37,15 +34,10 @@ public class Person {
     public void setPassword(String password){
         //to implement password checking
         this.password = password;
-        passwordSet = true;
     }
 
     public String getPassword(){
         return password;
-    }
-
-    public boolean isPasswordSet(){
-        return passwordSet;
     }
 
     public int getVaccineStatus() {

@@ -2,6 +2,7 @@ package com.example.assignment2;
 
 import android.os.Bundle;
 
+import com.example.assignment2.database.PersonDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
+
+    PersonDatabase personDatabase = new PersonDatabase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

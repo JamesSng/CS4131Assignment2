@@ -37,7 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
-                        android:text="@string/ic_no"
+                        android:text="@string/name"
                         android:textSize="16sp" />
 
                     <!-- ?? id for admin (autocompletetextview) -->
@@ -95,12 +95,6 @@
                         android:layout_gravity="start|center"
                         android:text="@string/login" />
 
-                    <Button
-                        android:id="@+id/registerButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center"
-                        android:text="@string/register" />
                 </TableRow>
             </TableLayout>
 
