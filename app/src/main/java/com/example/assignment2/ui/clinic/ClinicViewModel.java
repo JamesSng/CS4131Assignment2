@@ -1,10 +1,10 @@
 package com.example.assignment2.ui.clinic;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.assignment2.database.ClinicDatabase;
+
+import java.util.ArrayList;
 
 public class ClinicViewModel extends ViewModel {
 
@@ -12,5 +12,9 @@ public class ClinicViewModel extends ViewModel {
 
     public void loadDB(String str){
         clinicDB.loadDB(str);
+    }
+
+    public ClinicDatabase getDB(){
+        return clinicDB;
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class ClinicDatabase {
 
     ArrayList<Clinic> clinics = new ArrayList<>();
+    ArrayList<String> names = new ArrayList<>();
     Clinic currentClinic;
 
     public static int LOGIN_SUCCESSFUL = 0;
@@ -36,6 +37,11 @@ public class ClinicDatabase {
             String[] details = clinic.split(",");
             Clinic c = new Clinic(details[0], details[1]);
             clinics.add(c);
+            names.add(details[0]);
         }
+    }
+
+    public ArrayList<String> getNames(){
+        return names;
     }
 }
