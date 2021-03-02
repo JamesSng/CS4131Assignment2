@@ -9,9 +9,9 @@ public class AdminDatabase {
     ArrayList<Admin> admins;
     Admin currentAdmin;
 
-    public static int LOGIN_SUCCESSFUL = 0;
-    public static int INVALID_NAME = 1;
-    public static int INVALID_PASSWORD = 2;
+    public static final int LOGIN_SUCCESSFUL = 0;
+    public static final int INVALID_NAME = 1;
+    public static final int INVALID_PASSWORD = 2;
 
     public int login(String username, String password){
         for (Admin admin: admins){

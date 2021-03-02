@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.person.PersonFragment" >
+    tools:context=".ui.person.login.PersonFragment" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -93,12 +93,6 @@
                         android:layout_gravity="start|center"
                         android:text="@string/login" />
 
-                    <Button
-                        android:id="@+id/registerButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center"
-                        android:text="@string/register" />
                 </TableRow>
             </TableLayout>
 

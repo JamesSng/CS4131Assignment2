@@ -1,4 +1,3 @@
-
 package com.example.assignment2.database;
 
 import androidx.annotation.NonNull;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
 public class PersonDatabase {
 
     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("persons");
-    public static int LOGIN_SUCCESSFUL = 0;
-    public static int INVALID_IC_NUMBER = 1;
-    public static int INVALID_PASSWORD = 2;
+    public static final int LOGIN_SUCCESSFUL = 0;
+    public static final int INVALID_IC_NUMBER = 1;
+    public static final int INVALID_PASSWORD = 2;
     Person currentUser;
 
     public boolean setCurrentUser(String icNumber){
@@ -36,8 +35,10 @@ public class PersonDatabase {
     }
 
     public int login(String icNumber, String password){
-        if (!setCurrentUser(icNumber)) return INVALID_IC_NUMBER;
-        if (!currentUser.getPassword().equals(password)){
+        if (!setCurrentUser(icNumber)) {
+            return INVALID_IC_NUMBER;
+        }
+        if (currentUser != null && !currentUser.getPassword().equals(password)){
             currentUser = null;
             return INVALID_PASSWORD;
         }

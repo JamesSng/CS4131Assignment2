@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_person"
-        android:name="com.example.assignment2.ui.person.PersonFragment"
+        android:name="com.example.assignment2.ui.person.login.PersonFragment"
         android:label="Check In"
         tools:layout="@layout/fragment_person_login" />
 
@@ -22,4 +22,9 @@
         android:name="com.example.assignment2.ui.clinic.ClinicFragment"
         android:label="Clinic"
         tools:layout="@layout/fragment_clinic" />
+
+    <fragment
+        android:id="@+id/navigation_person_account"
+        android:name="com.example.assignment2.ui.person.account.PersonAccountFragment"
+        tools:layout="@layout/person_account_fragment" />
 </navigation>

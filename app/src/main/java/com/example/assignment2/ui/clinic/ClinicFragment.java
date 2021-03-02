@@ -1,7 +1,6 @@
 package com.example.assignment2.ui.clinic;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +30,7 @@ public class ClinicFragment extends Fragment {
             clinicViewModel.loadDB(((MainActivity) getActivity()).readFile("clinic"));
         }
         catch (IOException ex){
-            System.out.println(ex.getMessage());
-            Toast.makeText(getContext(), "Unable to read clinic file ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Unable to read clinic file", Toast.LENGTH_LONG).show();
         }
         return inflater.inflate(R.layout.fragment_clinic, container, false);
     }
