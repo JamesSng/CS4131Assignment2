@@ -38,6 +38,7 @@ public class PersonFragment extends Fragment {
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
             String username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
+            Log.i("PersonFragment", "Username was " + username);
             String password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
             int result = database.login(username, password);
             Log.i("PersonFragment", "Result returned was " + result);

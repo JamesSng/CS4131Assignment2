@@ -1,5 +1,7 @@
 package com.example.assignment2.database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.assignment2.model.Person;
@@ -20,6 +22,7 @@ public class PersonDatabase {
     Person currentUser;
 
     public boolean setCurrentUser(String icNumber){
+        Log.i("PersonDatabase", "Username " + icNumber);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -32,6 +35,10 @@ public class PersonDatabase {
             }
         });
         return (currentUser == null);
+    }
+
+    public Person getCurrentUser(){
+        return currentUser;
     }
 
     public int login(String icNumber, String password){
