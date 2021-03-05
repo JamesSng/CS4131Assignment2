@@ -84,7 +84,6 @@ public class PersonDatabase{
     }
 
     public interface onResult{
-
         void onResult();
     }
 }
