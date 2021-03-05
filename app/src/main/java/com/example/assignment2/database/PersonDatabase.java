@@ -1,5 +1,6 @@
 package com.example.assignment2.database;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class PersonDatabase {
+public class PersonDatabase{
 
     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("persons");
     public static final int LOGIN_SUCCESSFUL = 0;
@@ -21,20 +22,22 @@ public class PersonDatabase {
     public static final int INVALID_PASSWORD = 2;
     Person currentUser;
 
-    public boolean setCurrentUser(String icNumber){
+    public void setCurrentUser(String icNumber, onResult resultInterface){
         Log.i("PersonDatabase", "Username " + icNumber);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser = snapshot.child(icNumber).getValue(Person.class);
+                resultInterface.onResult();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                resultInterface.onResult();
                 currentUser = null;
             }
         });
-        return (currentUser == null);
+        Log.i("PersonDatabase", "Set current user " + (currentUser == null));
     }
 
     public Person getCurrentUser(){
@@ -42,13 +45,17 @@ public class PersonDatabase {
     }
 
     public int login(String icNumber, String password){
-        if (!setCurrentUser(icNumber)) {
+        Log.i("PersonDatabase", icNumber + " " + password);
+        if (currentUser == null) {
+            Log.i("PersonDatabase", "Invalid ic number");
             return INVALID_IC_NUMBER;
         }
-        if (currentUser != null && !currentUser.getPassword().equals(password)){
+        else if (!currentUser.getPassword().equals(password)){
             currentUser = null;
+            Log.i("PersonDatabase", "Invalid password");
             return INVALID_PASSWORD;
         }
+        Log.i("PersonDatabase", "Login successful");
         return LOGIN_SUCCESSFUL;
     }
 
@@ -74,5 +81,10 @@ public class PersonDatabase {
         currentUser.setRecovered();
         dbRef.child(currentUser.getIcNumber()).child("vaccineStatus")
                 .setValue(currentUser.getVaccineStatus());
+    }
+
+    public interface onResult{
+
+        void onResult();
     }
 }

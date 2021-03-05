@@ -22,9 +22,10 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.CAMERA;
 
-public class EditPatientActivity extends AppCompatActivity {
+public class EditPatientActivity extends AppCompatActivity implements PersonDatabase.onResult{
 
     private final int requestCode = 1;
+    private String icNumber;
     PersonDatabase db = new PersonDatabase();
     private ArrayList<RadioButton> radioButtons = new ArrayList<>();
 
@@ -104,15 +105,8 @@ public class EditPatientActivity extends AppCompatActivity {
     }
 
     public void loadData(String encryptedIc){
-        String icNumber = AES.decrypt(encryptedIc, AES.secret);
-        db.setCurrentUser(icNumber);
-
-        TextView nameText = findViewById(R.id.nameText);
-        nameText.setText(db.getCurrentUser().getName());
-        TextView icText = findViewById(R.id.icText);
-        icText.setText(icNumber);
-
-        setRadioButtons(db.getCurrentUser().getVaccineStatus());
+        icNumber = AES.decrypt(encryptedIc, AES.secret);
+        db.setCurrentUser(icNumber, this);
     }
 
     private boolean checkPermission(){
@@ -136,5 +130,14 @@ public class EditPatientActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void onResult(){
+        TextView nameText = findViewById(R.id.nameText);
+        nameText.setText(db.getCurrentUser().getName());
+        TextView icText = findViewById(R.id.icText);
+        icText.setText(icNumber);
+
+        setRadioButtons(db.getCurrentUser().getVaccineStatus());
     }
 }

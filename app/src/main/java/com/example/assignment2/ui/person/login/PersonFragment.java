@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,10 +21,11 @@ import com.example.assignment2.database.PersonDatabase;
 import com.example.assignment2.ui.person.account.PersonActivity;
 import com.google.android.material.snackbar.Snackbar;
 
-public class PersonFragment extends Fragment {
+public class PersonFragment extends Fragment implements PersonDatabase.onResult{
 
     private PersonViewModel personViewModel;
     private PersonDatabase database;
+    private String username, password;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,26 +39,12 @@ public class PersonFragment extends Fragment {
 
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
-            String username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
+            username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
             Log.i("PersonFragment", "Username was " + username);
-            String password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
+            password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
             int result = database.login(username, password);
             Log.i("PersonFragment", "Result returned was " + result);
-            switch (result){
-                case PersonDatabase.INVALID_IC_NUMBER:
-                    Snackbar.make(view, "Invalid IC number!", Snackbar.LENGTH_SHORT);
-                    break;
-                case PersonDatabase.INVALID_PASSWORD:
-                    Snackbar.make(view, "Invalid password!", Snackbar.LENGTH_SHORT);
-                    break;
-                case PersonDatabase.LOGIN_SUCCESSFUL:
-                    Intent intent = new Intent(getContext(), PersonActivity.class);
-                    startActivity(intent);
-                    break;
-                default:
-                    Snackbar.make(view, "Invalid login!", Snackbar.LENGTH_SHORT);
-                    break;
-            }
+            database.setCurrentUser(username, this);
         });
 
         /*
@@ -69,5 +57,23 @@ public class PersonFragment extends Fragment {
         return root;
     }
 
-
+    public void onResult(){
+        int result = database.login(username, password);
+        switch (result){
+            case PersonDatabase.INVALID_IC_NUMBER:
+                Toast.makeText(getContext(), "Invalid IC number!", Toast.LENGTH_LONG).show();
+                break;
+            case PersonDatabase.INVALID_PASSWORD:
+                Toast.makeText(getContext(), "Invalid password!", Toast.LENGTH_LONG).show();
+                break;
+            case PersonDatabase.LOGIN_SUCCESSFUL:
+                Intent intent = new Intent(getContext(), PersonActivity.class);
+                Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+                break;
+            default:
+                Toast.makeText(getContext(), "Invalid login!", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 }
