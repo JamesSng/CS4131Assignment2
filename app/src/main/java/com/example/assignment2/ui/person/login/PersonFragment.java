@@ -35,8 +35,6 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
 
         database = new PersonDatabase();
 
-        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
             username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
@@ -44,6 +42,10 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
             password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
             int result = database.login(username, password);
             Log.i("PersonFragment", "Result returned was " + result);
+            if (username.length() == 0){
+                Toast.makeText(getContext(), "Please enter a username!", Toast.LENGTH_LONG).show();
+                return;
+            }
             database.setCurrentUser(username, this);
         });
 

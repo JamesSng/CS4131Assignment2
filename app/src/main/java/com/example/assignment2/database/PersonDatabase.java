@@ -28,6 +28,7 @@ public class PersonDatabase{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser = snapshot.child(icNumber).getValue(Person.class);
+                Log.i("PersonDatabase", "Current user " + currentUser);
                 resultInterface.onResult();
             }
 
