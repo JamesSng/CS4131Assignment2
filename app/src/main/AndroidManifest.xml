@@ -16,8 +16,11 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.person.account.PersonActivity"
-            android:label="@string/title_activity_person"
+            android:label="View Details"
             android:theme="@style/Theme.Assignment2.NoActionBar" />
+        <activity
+            android:name=".QRCodeScannerActivity"
+            android:label="Scan QR Code"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
