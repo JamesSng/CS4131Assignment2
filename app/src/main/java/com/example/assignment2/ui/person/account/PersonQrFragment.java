@@ -24,7 +24,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public class PersonQrFragment extends Fragment {
 
-    private PersonQrViewModel mViewModel;
+    private PersonQrViewModel model;
+    private ImageView qrImage;
 
     public static PersonQrFragment newInstance() {
         return new PersonQrFragment();
@@ -34,20 +35,22 @@ public class PersonQrFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.person_qr_fragment, container, false);
-        ImageView qrImage = root.findViewById(R.id.qrImage);
-        try {
-            generateQRCodeImage("text", 400, 400, qrImage);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+        qrImage = root.findViewById(R.id.qrImage);
         return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(PersonQrViewModel.class);
-        // TODO: Use the ViewModel
+        model = new ViewModelProvider(this).get(PersonQrViewModel.class);
+        model.setIcNumber(PersonActivity.db.getCurrentUser().getIcNumber());
+        model.getIcNumber().observe(getViewLifecycleOwner(), icNumber -> {
+            try {
+                generateQRCodeImage("text", 400, 400, qrImage);
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void generateQRCodeImage(String text, int width, int height, ImageView qrCode)

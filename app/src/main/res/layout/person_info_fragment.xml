@@ -4,93 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.person.account.PersonInfoFragment" >
+    tools:context=".ui.person.account.PersonInfoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_vertical_margin">
+        android:layout_margin="@dimen/activity_vertical_margin"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/welcomeTV"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome, John Doe"
                 android:textSize="30sp" />
 
             <ImageView
-                android:layout_width="390dp"
-                android:layout_height="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
                 android:src="@drawable/blank" />
 
-            <TableRow
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="130dp"
+                android:layout_height="125dp"
+                android:adjustViewBounds="true"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
+
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="165dp">
+                android:layout_height="27dp"
+                android:src="@drawable/blank" />
 
-                <LinearLayout
-                    android:layout_width="149dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:src="@drawable/blank" />
-
-                    <ImageView
-                        android:id="@+id/userImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="146dp"
-                        android:src="@drawable/ic_baseline_qr_code_2_24" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:src="@drawable/blank" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/userNameTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_vertical_margin"
-                        android:text="Name: John Doe"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/userICTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_vertical_margin"
-                        android:text="IC No: S1234567A"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_vertical_margin"
-                        android:text="Date of Birth: 6/9/420"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-            </TableRow>
+            <Button
+                android:id="@+id/avatarButton"
+                android:layout_width="210dp"
+                android:layout_height="50dp"
+                android:text="Change Avatar" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:text="Your Vaccine Status:" />
+                android:text="Your Vaccine Status:"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/vaccineStatusTV"
@@ -108,9 +72,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:clickable="true"
         android:src="@drawable/ic_baseline_qr_code_2_24"
-        android:layout_margin="@dimen/activity_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

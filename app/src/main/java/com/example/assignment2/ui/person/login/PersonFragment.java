@@ -56,6 +56,7 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
                 break;
             case PersonDatabase.LOGIN_SUCCESSFUL:
                 Intent intent = new Intent(getContext(), PersonActivity.class);
+                intent.putExtra("icNumber", username);
                 Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 break;
