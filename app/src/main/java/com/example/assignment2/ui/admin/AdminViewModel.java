@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.assignment2.database.AdminDatabase;
+import com.example.assignment2.database.ClinicDatabase;
+
 public class AdminViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private AdminDatabase db = new AdminDatabase();
 
-    public AdminViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
-    }
+    public void loadDB(String str){ db.loadDB(str); }
 
-    public LiveData<String> getText() {
-        return mText;
+    public AdminDatabase getDB(){
+        return db;
     }
 }

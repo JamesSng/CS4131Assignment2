@@ -38,29 +38,15 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
             username = ((EditText)root.findViewById(R.id.usernameField)).getText().toString();
-            Log.i("PersonFragment", "Username was " + username);
             password = ((EditText)root.findViewById(R.id.passwordField)).getText().toString();
-            int result = database.login(username, password);
-            Log.i("PersonFragment", "Result returned was " + result);
-            if (username.length() == 0){
-                Toast.makeText(getContext(), "Please enter a username!", Toast.LENGTH_LONG).show();
-                return;
-            }
             database.setCurrentUser(username, this);
         });
 
-        /*
-        personViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
         return root;
     }
 
     public void onResult(){
-        int result = database.login(username, password);
+        int result = database.login(password);
         switch (result){
             case PersonDatabase.INVALID_IC_NUMBER:
                 Toast.makeText(getContext(), "Invalid IC number!", Toast.LENGTH_LONG).show();

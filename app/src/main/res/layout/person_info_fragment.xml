@@ -17,10 +17,100 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/welcomeTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="Welcome, John Doe" />
+                android:text="Welcome, John Doe"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:layout_width="390dp"
+                android:layout_height="14dp"
+                android:src="@drawable/blank" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="165dp">
+
+                <LinearLayout
+                    android:layout_width="149dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:src="@drawable/blank" />
+
+                    <ImageView
+                        android:id="@+id/userImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="146dp"
+                        android:src="@drawable/ic_baseline_qr_code_2_24" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:src="@drawable/blank" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/userNameTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_vertical_margin"
+                        android:text="Name: John Doe"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/userICTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_vertical_margin"
+                        android:text="IC No: S1234567A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_vertical_margin"
+                        android:text="Date of Birth: 6/9/420"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="Your Vaccine Status:" />
+
+            <TextView
+                android:id="@+id/vaccineStatusTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unvaccinated"
+                android:textColor="#FF0000"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_qr_code_2_24"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

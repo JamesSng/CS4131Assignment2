@@ -23,8 +23,4 @@
         android:label="Clinic"
         tools:layout="@layout/fragment_clinic" />
 
-    <fragment
-        android:id="@+id/navigation_person_account"
-        android:name="com.example.assignment2.ui.person.account.PersonAccountFragment"
-        tools:layout="@layout/person_account_fragment" />
 </navigation>

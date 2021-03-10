@@ -4,16 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.assignment2.database.PersonDatabase;
+
 public class PersonViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private PersonDatabase db = new PersonDatabase();
 
-    public PersonViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
-    }
+    public PersonDatabase getDb(){ return db; }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
 }

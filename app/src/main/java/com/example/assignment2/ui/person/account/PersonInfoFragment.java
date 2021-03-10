@@ -12,8 +12,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.assignment2.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static com.example.assignment2.ui.person.account.PersonActivity.navController;
 
 public class PersonInfoFragment extends Fragment {
 
@@ -26,7 +30,13 @@ public class PersonInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.person_info_fragment, container, false);
+        View root = inflater.inflate(R.layout.person_info_fragment, container, false);
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+
+        fab.setOnClickListener(view -> {
+            navController.navigate(R.id.action_personInfoFragment_to_personQrFragment);
+        });
+        return root;
     }
 
     @Override

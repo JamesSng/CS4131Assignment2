@@ -1,7 +1,6 @@
 package com.example.assignment2.database;
 
-import android.os.AsyncTask;
-import android.util.Log;
+ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -11,8 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class PersonDatabase{
 
@@ -28,7 +25,6 @@ public class PersonDatabase{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser = snapshot.child(icNumber).getValue(Person.class);
-                Log.i("PersonDatabase", "Current user " + currentUser);
                 resultInterface.onResult();
             }
 
@@ -45,9 +41,8 @@ public class PersonDatabase{
         return currentUser;
     }
 
-    public int login(String icNumber, String password){
-        Log.i("PersonDatabase", icNumber + " " + password);
-        if (currentUser == null) {
+    public int login(String password){
+        if (currentUser == null || currentUser.getPassword() == null) {
             Log.i("PersonDatabase", "Invalid ic number");
             return INVALID_IC_NUMBER;
         }

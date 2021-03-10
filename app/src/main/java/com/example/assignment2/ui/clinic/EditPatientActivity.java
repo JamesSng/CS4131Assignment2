@@ -138,6 +138,6 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
         TextView icText = findViewById(R.id.icText);
         icText.setText(icNumber);
 
-        setRadioButtons(db.getCurrentUser().getVaccineStatus());
+        setRadioButtons((int) db.getCurrentUser().getVaccineStatus());
     }
 }

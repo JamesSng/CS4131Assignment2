@@ -11,9 +11,10 @@ public class Person {
     public static final int RECOVERED = 3;
 
     public Person(){
+
     }
 
-    public Person(String icNumber, String name) {
+    public Person(String icNumber, String name){
         this.icNumber = icNumber;
         this.name = name;
         this.vaccineStatus = UNVACCINATED;
@@ -61,9 +62,5 @@ public class Person {
 
     public void setRecovered(){
         vaccineStatus = RECOVERED;
-    }
-
-    public String toString(){
-        return icNumber + " " + name + " " + password + " " + vaccineStatus;
     }
 }
