@@ -25,6 +25,7 @@ import static android.Manifest.permission.CAMERA;
 
 public class EditPatientActivity extends AppCompatActivity implements PersonDatabase.onResult{
 
+    private boolean bool = false;
     private final int requestCode = 1;
     private String icNumber;
     PersonDatabase db = new PersonDatabase();
@@ -62,25 +63,27 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
     }
 
     public void checkedChanged(RadioGroup group, int pos){
+        if (bool) return;
         if (db.getCurrentUser() == null) return;
         String text = "Set " + db.getCurrentUser().getIcNumber() + "'s status to ";
+        Log.i("buttonPos", pos + "");
         switch (pos){
-            case 0: {
+            case R.id.unvaccinatedRadioButton:
                 db.setUnvaccinated();
                 text += "unvaccinated";
-            }
-            case 1: {
+                break;
+            case R.id.firstShotRadioButton:
                 db.setFirstShot();
                 text += "first shot";
-            }
-            case 2: {
+                break;
+            case R.id.vaccinatedRadioButton:
                 db.setVaccinated();
                 text += "vaccinated";
-            }
-            case 3: {
+                break;
+            case R.id.recoveredRadioButton:
                 db.setRecovered();
                 text += "recovered";
-            }
+                break;
             default: break;
         }
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
@@ -94,14 +97,17 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
 
     private void setRadioButtons(int code){
         resetButtons();
+        bool = true;
         radioButtons.get(code).setChecked(true);
+        bool = false;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.i("Scan QR", "onActivityResult " + requestCode + " " + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == requestCode) {
+        if (requestCode == this.requestCode) {
             if (resultCode == RESULT_OK) {
-                String returnedResult = data.getData().toString();
+                String returnedResult = data.getStringExtra("result");
                 Log.i("Scan QR", "Returned " + returnedResult);
                 loadData(returnedResult);
             }
@@ -143,6 +149,7 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
         TextView icText = findViewById(R.id.icText);
         icText.setText(icNumber);
 
-        setRadioButtons((int) db.getCurrentUser().getVaccineStatus());
+        Log.i("buttonPos", db.getCurrentUser().getVaccineStatus() + "");
+        setRadioButtons(db.getCurrentUser().getVaccineStatus());
     }
 }

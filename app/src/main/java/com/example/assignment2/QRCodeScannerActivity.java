@@ -40,7 +40,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                         String res = result.getText();
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("result", res);
-                        Log.i("Scan QR", res);
+                        Log.i("Scan QR", "Result returned " + res);
                         setResult(Activity.RESULT_OK, returnIntent);
                         finish();
                     }
