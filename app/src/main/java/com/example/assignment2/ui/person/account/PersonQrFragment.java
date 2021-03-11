@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.assignment2.AES;
 import com.example.assignment2.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -46,7 +47,7 @@ public class PersonQrFragment extends Fragment {
         model.setIcNumber(PersonActivity.db.getCurrentUser().getIcNumber());
         model.getIcNumber().observe(getViewLifecycleOwner(), icNumber -> {
             try {
-                generateQRCodeImage("text", 400, 400, qrImage);
+                generateQRCodeImage(AES.encrypt(icNumber, "secret"), 400, 400, qrImage);
             } catch (WriterException e) {
                 e.printStackTrace();
             }
