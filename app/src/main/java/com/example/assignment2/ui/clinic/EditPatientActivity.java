@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,6 +40,7 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
 
         Button scanButton = findViewById(R.id.scanPatientButton);
         scanButton.setOnClickListener((view) -> {
+            Log.i("Scan QR", "Start activity");
             if (!checkPermission()) requestPermission();
             else {
                 Intent intent = new Intent(this, QRCodeScannerActivity.class);
@@ -60,6 +62,7 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
     }
 
     public void checkedChanged(RadioGroup group, int pos){
+        if (db.getCurrentUser() == null) return;
         String text = "Set " + db.getCurrentUser().getIcNumber() + "'s status to ";
         switch (pos){
             case 0: {
@@ -96,9 +99,10 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == requestCode) {
+        if (resultCode == requestCode) {
             if (resultCode == RESULT_OK) {
                 String returnedResult = data.getData().toString();
+                Log.i("Scan QR", "Returned " + returnedResult);
                 loadData(returnedResult);
             }
         }
@@ -106,6 +110,7 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
 
     public void loadData(String encryptedIc){
         icNumber = AES.decrypt(encryptedIc, AES.secret);
+        Log.i("Scan QR", "Returned " + icNumber);
         db.setCurrentUser(icNumber, this);
     }
 

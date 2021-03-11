@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class AdminDatabase {
 
-    ArrayList<Admin> admins;
+    ArrayList<Admin> admins = new ArrayList<>();
     Admin currentAdmin;
 
     public static final int LOGIN_SUCCESSFUL = 0;

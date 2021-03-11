@@ -1,6 +1,9 @@
 package com.example.assignment2;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ public class QRCodeScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code_scanner);
 
+        Log.i("Scan QR", "Started activity");
+
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
@@ -32,8 +37,11 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int mode = getIntent().getIntExtra("mode", 0);
                         String res = result.getText();
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("result", res);
+                        Log.i("Scan QR", res);
+                        setResult(Activity.RESULT_OK, returnIntent);
                         finish();
                     }
                 });

@@ -43,7 +43,9 @@
                     <AutoCompleteTextView
                         android:id="@+id/clinicName"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:ems="9"
+                        android:layout_gravity="end"/>
 
                     <!-- ?? id for admin (autocompletetextview) -->
 
