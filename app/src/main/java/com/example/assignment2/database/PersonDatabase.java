@@ -20,7 +20,6 @@ public class PersonDatabase{
     Person currentUser;
 
     public void setCurrentUser(String icNumber, onResult resultInterface){
-        Log.i("PersonDatabase", "Username " + icNumber);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -34,7 +33,6 @@ public class PersonDatabase{
                 currentUser = null;
             }
         });
-        Log.i("PersonDatabase", "Set current user " + (currentUser == null));
     }
 
     public Person getCurrentUser(){

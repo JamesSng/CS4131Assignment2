@@ -63,4 +63,6 @@ public class Person {
     public void setRecovered(){
         vaccineStatus = RECOVERED;
     }
+
+    public String toString(){ return "[icNumber="+icNumber+",name="+name+",password="+password+",vaccineStatus="+vaccineStatus+"]"; }
 }

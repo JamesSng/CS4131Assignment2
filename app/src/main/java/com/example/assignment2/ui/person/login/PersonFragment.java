@@ -23,17 +23,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class PersonFragment extends Fragment implements PersonDatabase.onResult{
 
-    private PersonViewModel personViewModel;
     private PersonDatabase database;
     private String username, password;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        personViewModel =
-                new ViewModelProvider(this).get(PersonViewModel.class);
+        PersonViewModel personViewModel = new ViewModelProvider(this).get(PersonViewModel.class);
         View root = inflater.inflate(R.layout.fragment_person_login, container, false);
 
-        database = new PersonDatabase();
+        database = personViewModel.getDb();
 
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {

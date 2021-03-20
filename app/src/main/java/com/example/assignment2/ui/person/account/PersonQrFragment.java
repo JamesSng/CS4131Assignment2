@@ -23,6 +23,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import static com.example.assignment2.ui.person.account.PersonActivity.db;
+
 public class PersonQrFragment extends Fragment {
 
     private PersonQrViewModel model;
@@ -44,7 +46,7 @@ public class PersonQrFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         model = new ViewModelProvider(this).get(PersonQrViewModel.class);
-        model.setIcNumber(PersonActivity.db.getCurrentUser().getIcNumber());
+        model.setIcNumber(db.getCurrentUser().getIcNumber());
         model.getIcNumber().observe(getViewLifecycleOwner(), icNumber -> {
             try {
                 generateQRCodeImage(AES.encrypt(icNumber, "secret"), 400, 400, qrImage);

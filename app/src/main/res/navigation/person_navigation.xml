@@ -14,9 +14,11 @@
             android:id="@+id/action_personInfoFragment_to_personQrFragment"
             app:destination="@id/personQrFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/personQrFragment"
         android:name="com.example.assignment2.ui.person.account.PersonQrFragment"
         android:label="person_qr_fragment"
         tools:layout="@layout/person_qr_fragment" />
+
 </navigation>

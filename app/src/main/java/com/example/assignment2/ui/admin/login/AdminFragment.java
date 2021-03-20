@@ -1,6 +1,5 @@
-package com.example.assignment2.ui.admin;
+package com.example.assignment2.ui.admin.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.assignment2.MainActivity;
 import com.example.assignment2.R;
 import com.example.assignment2.database.AdminDatabase;
-import com.example.assignment2.database.ClinicDatabase;
-import com.example.assignment2.model.Admin;
-import com.example.assignment2.model.Pair;
-import com.example.assignment2.ui.clinic.EditPatientActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 

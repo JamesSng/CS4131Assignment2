@@ -24,36 +24,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome, John Doe"
+                android:fontFamily="@font/montserrat"
                 android:textSize="30sp" />
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="27dp"
+                android:layout_height="24dp"
                 android:src="@drawable/blank" />
 
-            <ImageView
+            <com.birjuvachhani.avatarview.AvatarView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/avatar"
-                android:layout_width="130dp"
-                android:layout_height="125dp"
-                android:adjustViewBounds="true"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7" />
+                android:text="John Doe"
+                android:textSize="24sp"
+                app:backgroundColor="@color/material_blue"
+                app:border_color="@android:color/white"
+                app:border_width="2dp"
+                app:circleRadius="50dp"
+                app:mode="COLOR" />
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="27dp"
+                android:layout_height="24dp"
                 android:src="@drawable/blank" />
-
-            <Button
-                android:id="@+id/avatarButton"
-                android:layout_width="210dp"
-                android:layout_height="50dp"
-                android:text="Change Avatar" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your Vaccine Status:"
+                android:fontFamily="@font/montserrat"
                 android:textSize="24sp" />
 
             <TextView
@@ -63,18 +63,18 @@
                 android:text="Unvaccinated"
                 android:textColor="#FF0000"
                 android:textSize="40sp"
+                android:fontFamily="@font/montserrat"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusInfoTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textSize="20sp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
 
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:src="@drawable/ic_baseline_qr_code_2_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
