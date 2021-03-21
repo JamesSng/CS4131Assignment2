@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:ignore="hardcodedText"
     tools:context=".ui.person.account.PersonInfoFragment">
 
     <ScrollView
@@ -72,7 +73,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:textSize="20sp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+                android:text="blah blah blah" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="327dp"
+                android:src="@drawable/blank" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="View QR Code" />
+
 
         </LinearLayout>
     </ScrollView>

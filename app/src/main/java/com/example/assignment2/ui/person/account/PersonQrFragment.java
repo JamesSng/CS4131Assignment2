@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class PersonQrFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         model = new ViewModelProvider(this).get(PersonQrViewModel.class);
-        model.setIcNumber(db.getCurrentUser().getIcNumber());
+        new Handler().postDelayed(() -> model.setIcNumber(db.getCurrentUser().getIcNumber()), 300);
         model.getIcNumber().observe(getViewLifecycleOwner(), icNumber -> {
             try {
                 generateQRCodeImage(AES.encrypt(icNumber, "secret"), 400, 400, qrImage);

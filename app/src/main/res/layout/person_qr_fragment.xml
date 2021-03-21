@@ -24,9 +24,10 @@
             android:src="@drawable/ic_baseline_qr_code_2_24" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="228dp"
             android:layout_height="77dp"
             android:text="Present the above QR code to the admin/clinic"
+            android:textAlignment="center"
             android:textSize="18sp" />
     </LinearLayout>
 

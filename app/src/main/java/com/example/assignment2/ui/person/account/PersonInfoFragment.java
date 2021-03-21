@@ -68,8 +68,8 @@ public class PersonInfoFragment extends Fragment {
         vaccineStatusTV = root.findViewById(R.id.vaccineStatusTV);
         statusInfoTV = root.findViewById(R.id.statusInfoTV);
 
-        //root.findViewById(R.id.fab).setOnClickListener(view ->
-        //        navController.navigate(R.id.action_personInfoFragment_to_personQrFragment));
+        root.findViewById(R.id.button).setOnClickListener(view ->
+               navController.navigate(R.id.personInfo_to_personQR));
 
         return root;
     }

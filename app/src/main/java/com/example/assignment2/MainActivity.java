@@ -1,8 +1,13 @@
 package com.example.assignment2;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.assignment2.database.PersonDatabase;
+import com.example.assignment2.onboarding.OnboardingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,15 +29,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_person, R.id.navigation_admin, R.id.navigation_clinic)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("started_before", Context.MODE_PRIVATE);
+        int defaultVal = getResources().getInteger(R.integer.DEFAULT);
+        int value = sharedPreferences.getInt("started_before", defaultVal);
+        Log.e("Shared Preferences", value+"");
+        if(value == 0){
+            startActivity(new Intent(this, OnboardingActivity.class));
+        } else {
+            BottomNavigationView navView = findViewById(R.id.nav_view);
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_person, R.id.navigation_admin, R.id.navigation_clinic)
+                    .build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(navView, navController);
+        }
     }
 
     public String readFile(String filename) throws IOException{

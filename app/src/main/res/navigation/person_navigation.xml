@@ -11,7 +11,7 @@
         android:label="person_info_fragment"
         tools:layout="@layout/person_info_fragment" >
         <action
-            android:id="@+id/action_personInfoFragment_to_personQrFragment"
+            android:id="@+id/personInfo_to_personQR"
             app:destination="@id/personQrFragment" />
     </fragment>
 
