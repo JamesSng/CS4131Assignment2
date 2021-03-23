@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/personFragment">
+
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.example.assignment2.ui.person.login.PersonFragment"
+        android:label="PersonFragment"
+        tools:layout="@layout/fragment_person_login" >
+        <action
+            android:id="@+id/action_personFragment_to_clinicFragment"
+            app:destination="@id/clinicFragment" />
+        <action
+            android:id="@+id/action_personFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.example.assignment2.ui.admin.login.AdminFragment"
+        android:label="AdminFragment"
+        tools:layout="@layout/fragment_admin_login">
+        <action
+            android:id="@+id/action_adminFragment_to_clinicFragment"
+            app:destination="@id/clinicFragment" />
+        <action
+            android:id="@+id/action_adminFragment_to_personFragment"
+            app:destination="@id/personFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clinicFragment"
+        android:name="com.example.assignment2.ui.clinic.ClinicFragment"
+        android:label="ClinicFragment"
+        tools:layout="@layout/fragment_clinic_login">
+        <action
+            android:id="@+id/action_clinicFragment_to_personFragment"
+            app:destination="@id/personFragment" />
+        <action
+            android:id="@+id/action_clinicFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+
+</navigation>

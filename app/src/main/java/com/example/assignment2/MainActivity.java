@@ -8,11 +8,15 @@ import android.util.Log;
 
 import com.example.assignment2.database.PersonDatabase;
 import com.example.assignment2.onboarding.OnboardingActivity;
+import com.example.assignment2.ui.admin.account.AdminActivity;
+import com.example.assignment2.ui.clinic.EditPatientActivity;
+import com.example.assignment2.ui.person.account.PersonActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -30,23 +34,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences("started_before", Context.MODE_PRIVATE);
-        int defaultVal = getResources().getInteger(R.integer.DEFAULT);
-        int value = sharedPreferences.getInt("started_before", defaultVal);
-        Log.e("Shared Preferences", value+"");
+        final int defaultVal = getResources().getInteger(R.integer.DEFAULT);
+        int value = getSharedPreferences("started_before", Context.MODE_PRIVATE).getInt("started_before", defaultVal);
         if(value == 0){
             startActivity(new Intent(this, OnboardingActivity.class));
         } else {
-            BottomNavigationView navView = findViewById(R.id.nav_view);
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.navigation_person, R.id.navigation_admin, R.id.navigation_clinic)
-                    .build();
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(navView, navController);
+            value = getSharedPreferences("logged_in", Context.MODE_PRIVATE).getInt("logged_in", defaultVal);
+            String username = getSharedPreferences("username", Context.MODE_PRIVATE).getString("username", null);
+            Intent intent;
+            switch(value){
+                case 0:
+                    break;
+                case 1:
+                    // login to user
+                    intent = new Intent(this, PersonActivity.class);
+                    intent.putExtra("icNumber", username);
+                    startActivity(intent);
+                    break;
+                case 2:
+                    // login to admin
+                    intent = new Intent(this, AdminActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    break;
+                case 3:
+                    // login to clinic
+                    intent = new Intent(this, EditPatientActivity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    break;
+            }
         }
     }
 
@@ -61,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         inputStreamReader.close();
         bufferedReader.close();
         return stringBuffer.toString().trim();
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }
 

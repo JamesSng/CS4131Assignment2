@@ -1,6 +1,8 @@
 package com.example.assignment2.ui.person.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.assignment2.R;
 import com.example.assignment2.database.PersonDatabase;
@@ -40,6 +43,15 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
             database.setCurrentUser(username, this);
         });
 
+        NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
+        NavController navController = navHostFragment.getNavController();
+
+        root.findViewById(R.id.toAdminTextView).setOnClickListener(
+                view -> navController.navigate(R.id.action_personFragment_to_adminFragment));
+
+        root.findViewById(R.id.toClinicTextView).setOnClickListener(
+                view -> navController.navigate(R.id.action_personFragment_to_clinicFragment));
+
         return root;
     }
 
@@ -53,6 +65,9 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
                 Toast.makeText(getContext(), "Invalid password!", Toast.LENGTH_LONG).show();
                 break;
             case PersonDatabase.LOGIN_SUCCESSFUL:
+                getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 1).apply();
+                getActivity().getSharedPreferences("username", Context.MODE_PRIVATE).edit().putString("username", username).apply();
+
                 Intent intent = new Intent(getContext(), PersonActivity.class);
                 intent.putExtra("icNumber", username);
                 Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();

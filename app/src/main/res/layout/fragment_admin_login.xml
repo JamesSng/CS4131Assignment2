@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.clinic.ClinicFragment" >
+    tools:context=".ui.person.login.PersonFragment" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_margin="@dimen/activity_vertical_margin"
                 android:textSize="28sp"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/clinic_login" />
+                android:text="@string/admin_login" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -38,20 +38,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
-                        android:text="@string/clinic_name"
+                        android:text="@string/name"
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/clinicName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="9"
-                        android:fontFamily="@font/montserrat"
-                        android:layout_gravity="end"/>
-
                     <!-- ?? id for admin (autocompletetextview) -->
 
+                    <EditText
+                        android:id="@+id/usernameField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat"
+                        tools:ignore="LabelFor" />
                 </TableRow>
 
                 <TableRow
@@ -111,4 +114,27 @@
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/toClinicTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="#1a73e8"
+        android:text="I am signing in as a clinic" />
+
+    <TextView
+        android:id="@+id/toPersonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/toClinicTextView"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="#1a73e8"
+        android:text="I am signing in as a citizen" />
+
+</RelativeLayout>

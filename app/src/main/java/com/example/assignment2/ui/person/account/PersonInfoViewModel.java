@@ -1,6 +1,7 @@
 package com.example.assignment2.ui.person.account;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,15 +10,15 @@ import androidx.lifecycle.ViewModel;
 import com.birjuvachhani.avatarview.AvatarView;
 import com.example.assignment2.model.Person;
 
+import java.util.Objects;
+
 public class PersonInfoViewModel extends ViewModel {
-    private MutableLiveData<AvatarView> avatarView = new MutableLiveData<>();
+    private MutableLiveData<Bitmap> bitmap = new MutableLiveData<>();
     private MutableLiveData<Person> person = new MutableLiveData<>();
 
-    public LiveData<AvatarView> getAvatarView(){ return avatarView; }
+    public LiveData<Bitmap> getBitmap(){ return bitmap; }
 
-    public void setAvatarView(AvatarView avatarView){ this.avatarView.setValue(avatarView);}
-
-    public void setImageBitmap(Bitmap bitmap){ avatarView.getValue().setImageBitmap(bitmap); }
+    public void setBitmap(Bitmap bitmap){ this.bitmap.setValue(bitmap); }
 
     public void setPerson(Person person){ this.person.setValue(person); }
 
