@@ -20,10 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import static android.Manifest.permission.CAMERA;
 
@@ -79,7 +76,7 @@ public class AdminActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.admin_logout) {
+        if (id == R.id.clinic_logout) {
             Toast.makeText(this, "See you next time!", Toast.LENGTH_SHORT).show();
             getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
             startActivity(new Intent(this, MainActivity.class));

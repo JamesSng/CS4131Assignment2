@@ -30,16 +30,15 @@
             android:label="@string/title_activity_admin"
             android:theme="@style/Theme.Assignment2.NoActionBar"></activity>
         <activity
-            android:name=".ui.clinic.EditPatientActivity"
-            android:noHistory="true"
-            android:parentActivityName=".MainActivity" />
+            android:name=".ui.clinic.EditPatientActivity" />
         <activity
             android:name=".ui.person.account.PersonActivity"
             android:label="My Account"
             android:theme="@style/Theme.Assignment2.NoActionBar" />
         <activity
             android:name=".QRCodeScannerActivity"
-            android:label="Scan QR Code" />
+            android:label="Scan QR Code"
+            android:parentActivityName=".ui.clinic.EditPatientActivity"/>
         <activity
             android:name=".onboarding.OnboardingActivity"
             android:label="Welcome!"

@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.assignment2.AES;
+import com.example.assignment2.MainActivity;
 import com.example.assignment2.QRCodeScannerActivity;
 import com.example.assignment2.R;
 import com.example.assignment2.database.PersonDatabase;
@@ -37,7 +41,6 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_patient);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button scanButton = findViewById(R.id.scanPatientButton);
         scanButton.setOnClickListener((view) -> {
@@ -60,6 +63,33 @@ public class EditPatientActivity extends AppCompatActivity implements PersonData
 
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(this::checkedChanged);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_clinic, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        Log.i("logout", "logout pressed");
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.clinic_logout) {
+            Toast.makeText(this, "See you next time!", Toast.LENGTH_SHORT).show();
+            getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void checkedChanged(RadioGroup group, int pos){

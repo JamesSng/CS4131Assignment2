@@ -20,17 +20,18 @@ public class PersonDatabase{
     Person currentUser;
 
     public void setCurrentUser(String icNumber, onResult resultInterface){
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference ref = dbRef.child(icNumber);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentUser = snapshot.child(icNumber).getValue(Person.class);
+                currentUser = snapshot.getValue(Person.class);
                 resultInterface.onResult();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                resultInterface.onResult();
                 currentUser = null;
+                resultInterface.onResult();
             }
         });
     }
