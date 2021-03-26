@@ -1,10 +1,7 @@
-package com.example.assignment2.ui.person.login;
+package com.example.assignment2.ui.person;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +13,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.assignment2.MainActivity;
 import com.example.assignment2.R;
 import com.example.assignment2.database.PersonDatabase;
-import com.example.assignment2.ui.person.account.PersonActivity;
-import com.google.android.material.snackbar.Snackbar;
 
-public class PersonFragment extends Fragment implements PersonDatabase.onResult{
+public class PersonLoginFragment extends Fragment implements PersonDatabase.onResult{
 
     private PersonDatabase database;
     private String username, password;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        PersonViewModel personViewModel = new ViewModelProvider(this).get(PersonViewModel.class);
+        PersonLoginViewModel personLoginViewModel = new ViewModelProvider(this).get(PersonLoginViewModel.class);
         View root = inflater.inflate(R.layout.fragment_person_login, container, false);
 
-        database = personViewModel.getDb();
+        database = personLoginViewModel.getDb();
 
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
@@ -55,6 +50,12 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
         return root;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
+    }
+
     public void onResult(){
         int result = database.login(password);
         switch (result){
@@ -68,10 +69,13 @@ public class PersonFragment extends Fragment implements PersonDatabase.onResult{
                 getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 1).apply();
                 getActivity().getSharedPreferences("username", Context.MODE_PRIVATE).edit().putString("username", username).apply();
 
-                Intent intent = new Intent(getContext(), PersonActivity.class);
-                intent.putExtra("icNumber", username);
+                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
+                NavController navController = navHostFragment.getNavController();
                 Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
-                startActivity(intent);
+
+                MainActivity.db = database;
+
+                navController.navigate(R.id.action_personFragment_to_personInfoFragment);
                 break;
             default:
                 Toast.makeText(getContext(), "Invalid login!", Toast.LENGTH_LONG).show();

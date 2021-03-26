@@ -31,28 +31,15 @@ public class QRCodeScannerActivity extends AppCompatActivity {
 
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
-        mCodeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String res = result.getText();
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("result", res);
-                        Log.i("Scan QR", "Result returned " + res);
-                        setResult(Activity.RESULT_OK, returnIntent);
-                        finish();
-                    }
-                });
-            }
-        });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
+            String res = result.getText();
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result", res);
+            Log.i("Scan QR", "Result returned " + res);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        }));
+        scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
 
     @Override

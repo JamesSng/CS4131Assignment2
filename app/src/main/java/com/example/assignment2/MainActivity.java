@@ -2,37 +2,43 @@ package com.example.assignment2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.assignment2.database.PersonDatabase;
 import com.example.assignment2.onboarding.OnboardingActivity;
-import com.example.assignment2.ui.admin.account.AdminActivity;
 import com.example.assignment2.ui.clinic.EditPatientActivity;
-import com.example.assignment2.ui.person.account.PersonActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.assignment2.ui.person.PersonInfoViewModel;
+import com.example.assignment2.ui.person.PersonQrViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
-    PersonDatabase personDatabase = new PersonDatabase();
+    public static PersonDatabase db;
+    public static String username;
+
+    private PersonInfoViewModel personInfoViewModel;
+    private PersonQrViewModel personQrViewModel;
+
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
+        navController = navHostFragment.getNavController();
 
         final int defaultVal = getResources().getInteger(R.integer.DEFAULT);
         int value = getSharedPreferences("started_before", Context.MODE_PRIVATE).getInt("started_before", defaultVal);
@@ -40,22 +46,27 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, OnboardingActivity.class));
         } else {
             value = getSharedPreferences("logged_in", Context.MODE_PRIVATE).getInt("logged_in", defaultVal);
-            String username = getSharedPreferences("username", Context.MODE_PRIVATE).getString("username", null);
+            username = getSharedPreferences("username", Context.MODE_PRIVATE).getString("username", null);
             Intent intent;
             switch(value){
                 case 0:
                     break;
                 case 1:
                     // login to user
-                    intent = new Intent(this, PersonActivity.class);
-                    intent.putExtra("icNumber", username);
-                    startActivity(intent);
+                    personInfoViewModel = new ViewModelProvider(this).get(PersonInfoViewModel.class);
+                    personQrViewModel = new ViewModelProvider(this).get(PersonQrViewModel.class);
+
+                    db = new PersonDatabase();
+                    db.setCurrentUser(username, this::onResult);
+                    personInfoViewModel.setPerson(db.getCurrentUser());
+                    personQrViewModel.setIcNumber(username);
+
+                    navController.navigate(R.id.action_personFragment_to_personInfoFragment);
                     break;
                 case 2:
                     // login to admin
-                    intent = new Intent(this, AdminActivity.class);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
+                    navController.navigate(R.id.action_personFragment_to_adminFragment);
+                    navController.navigate(R.id.action_adminFragment_to_adminStatusFragment);
                     break;
                 case 3:
                     // login to clinic
@@ -83,6 +94,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
 
+    }
+
+    public void onResult(){
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_person, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Toast.makeText(this,"See you next time!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.personFragment);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

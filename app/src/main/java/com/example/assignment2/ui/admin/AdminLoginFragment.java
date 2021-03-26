@@ -1,4 +1,4 @@
-package com.example.assignment2.ui.admin.login;
+package com.example.assignment2.ui.admin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,21 +18,20 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.assignment2.MainActivity;
 import com.example.assignment2.R;
 import com.example.assignment2.database.AdminDatabase;
-import com.example.assignment2.ui.admin.account.AdminActivity;
 
 import java.io.IOException;
 
-public class AdminFragment extends Fragment {
+public class AdminLoginFragment extends Fragment {
 
-    private AdminViewModel adminViewModel;
+    private AdminLoginViewModel adminLoginViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        adminViewModel =
-                new ViewModelProvider(this).get(AdminViewModel.class);
+        adminLoginViewModel =
+                new ViewModelProvider(this).get(AdminLoginViewModel.class);
 
         try {
-            adminViewModel.loadDB(((MainActivity) getActivity()).readFile("admin"));
+            adminLoginViewModel.loadDB(((MainActivity) getActivity()).readFile("admin"));
         }
         catch (IOException ex){
             Toast.makeText(getContext(), "Unable to read admin file", Toast.LENGTH_LONG).show();
@@ -40,10 +39,10 @@ public class AdminFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_admin_login, container, false);
 
-        root.findViewById(R.id.loginButton).setOnClickListener(this::handleLogin);
-
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
         NavController navController = navHostFragment.getNavController();
+
+        root.findViewById(R.id.loginButton).setOnClickListener(this::handleLogin);
 
         root.findViewById(R.id.toPersonTextView).setOnClickListener(
                 view -> navController.navigate(R.id.action_adminFragment_to_personFragment));
@@ -52,6 +51,12 @@ public class AdminFragment extends Fragment {
                 view -> navController.navigate(R.id.action_adminFragment_to_clinicFragment));
 
         return root;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
     }
 
     public void handleLogin(View view){
@@ -66,14 +71,16 @@ public class AdminFragment extends Fragment {
             Toast.makeText(getContext(), "Please enter a password!", Toast.LENGTH_LONG).show();
             return;
         }
-        int loginRes = adminViewModel.getDB().login(username, password);
+        int loginRes = adminLoginViewModel.getDB().login(username, password);
         if (loginRes == AdminDatabase.LOGIN_SUCCESSFUL){
             getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 2).apply();
             getActivity().getSharedPreferences("username", Context.MODE_PRIVATE).edit().putString("username", username).apply();
 
             Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getContext(), AdminActivity.class);
-            getContext().startActivity(intent);
+            NavController navController =
+                    ((NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment)).getNavController();
+
+            navController.navigate(R.id.action_adminFragment_to_adminStatusFragment);
         }
         else if (loginRes == AdminDatabase.INVALID_PASSWORD){
             Toast.makeText(getContext(), "Invalid password!", Toast.LENGTH_LONG).show();

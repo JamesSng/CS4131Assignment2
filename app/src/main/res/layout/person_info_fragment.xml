@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="hardcodedText"
-    tools:context=".ui.person.account.PersonInfoFragment">
+    tools:context=".ui.person.PersonInfoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:id="@+id/welcomeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome, John Doe"
+                android:text=""
                 android:fontFamily="@font/montserrat"
                 android:textSize="30sp" />
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatar"
-                android:text="John Doe"
+                android:text=""
                 android:textSize="24sp"
                 app:backgroundColor="@color/material_blue"
                 app:border_color="@android:color/white"
@@ -61,7 +61,7 @@
                 android:id="@+id/vaccineStatusTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Unvaccinated"
+                android:text=""
                 android:textColor="#FF0000"
                 android:textSize="40sp"
                 android:fontFamily="@font/montserrat"
@@ -73,22 +73,21 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:textSize="20sp"
-                android:text="blah blah blah" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:src="@drawable/blank" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="View QR Code" />
+                android:text="" />
 
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="View QR Code"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainNavHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="321dp" />
+        tools:layout_editor_absoluteY="56dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

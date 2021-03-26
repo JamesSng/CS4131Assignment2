@@ -1,4 +1,4 @@
-package com.example.assignment2.ui.person.account;
+package com.example.assignment2.ui.person;
 
 import android.graphics.Bitmap;
 import android.net.Uri;

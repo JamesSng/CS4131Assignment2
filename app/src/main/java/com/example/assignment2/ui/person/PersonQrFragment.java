@@ -1,15 +1,16 @@
-package com.example.assignment2.ui.person.account;
+package com.example.assignment2.ui.person;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,13 +19,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.assignment2.AES;
+import com.example.assignment2.MainActivity;
 import com.example.assignment2.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import static com.example.assignment2.ui.person.account.PersonActivity.db;
 
 public class PersonQrFragment extends Fragment {
 
@@ -40,17 +41,25 @@ public class PersonQrFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.person_qr_fragment, container, false);
         qrImage = root.findViewById(R.id.qrImage);
+
+        root.findViewById(R.id.toInfoButton).setOnClickListener(view -> {
+            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
+            NavController navController = navHostFragment.getNavController();
+
+            navController.navigate(R.id.action_personQrFragment_to_personInfoFragment);
+        });
+
         return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        model = new ViewModelProvider(this).get(PersonQrViewModel.class);
-        new Handler().postDelayed(() -> model.setIcNumber(db.getCurrentUser().getIcNumber()), 300);
+        model = new ViewModelProvider(requireActivity()).get(PersonQrViewModel.class);
+        new Handler().postDelayed(() -> model.setIcNumber(MainActivity.db.getCurrentUser().getIcNumber()), 300);
         model.getIcNumber().observe(getViewLifecycleOwner(), icNumber -> {
             try {
-                generateQRCodeImage(AES.encrypt(icNumber, "secret"), 400, 400, qrImage);
+                if(icNumber != null) generateQRCodeImage(AES.encrypt(icNumber, AES.secret), 400, 400, qrImage);
             } catch (WriterException e) {
                 e.printStackTrace();
             }

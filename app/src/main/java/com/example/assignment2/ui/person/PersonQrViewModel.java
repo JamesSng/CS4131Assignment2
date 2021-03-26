@@ -1,4 +1,4 @@
-package com.example.assignment2.ui.person.account;
+package com.example.assignment2.ui.person;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

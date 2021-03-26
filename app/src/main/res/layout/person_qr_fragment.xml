@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.person.account.PersonQrFragment">
+    tools:ignore="hardcodedText"
+    tools:context=".ui.person.PersonQrFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -27,8 +28,16 @@
             android:layout_width="228dp"
             android:layout_height="77dp"
             android:text="Present the above QR code to the admin/clinic"
+            android:fontFamily="@font/montserrat"
             android:textAlignment="center"
             android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/toInfoButton"
+            android:layout_width="266dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Back to info" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

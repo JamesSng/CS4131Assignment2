@@ -24,17 +24,17 @@ import com.example.assignment2.database.ClinicDatabase;
 
 import java.io.IOException;
 
-public class ClinicFragment extends Fragment {
+public class ClinicLoginFragment extends Fragment {
 
-    private ClinicViewModel clinicViewModel;
+    private ClinicLoginViewModel clinicLoginViewModel;
     String username = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        clinicViewModel =
-                new ViewModelProvider(this).get(ClinicViewModel.class);
+        clinicLoginViewModel =
+                new ViewModelProvider(this).get(ClinicLoginViewModel.class);
         try {
-            clinicViewModel.loadDB(((MainActivity) getActivity()).readFile("clinic"));
+            clinicLoginViewModel.loadDB(((MainActivity) getActivity()).readFile("clinic"));
         }
         catch (IOException ex){
             Toast.makeText(getContext(), "Unable to read clinic file", Toast.LENGTH_LONG).show();
@@ -43,7 +43,7 @@ public class ClinicFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_clinic_login, container, false);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, clinicViewModel.getDB().getNames());
+                android.R.layout.simple_dropdown_item_1line, clinicLoginViewModel.getDB().getNames());
         AutoCompleteTextView clinicName = view.findViewById(R.id.clinicName);
         clinicName.setAdapter(adapter);
         clinicName.setOnItemClickListener((parent, view1, position, id) -> {
@@ -65,6 +65,12 @@ public class ClinicFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
+    }
+
     public void handleLogin(View view){
         EditText passwordField = getView().findViewById(R.id.passwordField);
         String password = passwordField.getText().toString();
@@ -76,7 +82,7 @@ public class ClinicFragment extends Fragment {
             Toast.makeText(getContext(), "Please enter a password!", Toast.LENGTH_LONG).show();
             return;
         }
-        int loginRes = clinicViewModel.getDB().login(username, password);
+        int loginRes = clinicLoginViewModel.getDB().login(username, password);
         if (loginRes == ClinicDatabase.LOGIN_SUCCESSFUL){
             getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 3).apply();
             getActivity().getSharedPreferences("username", Context.MODE_PRIVATE).edit().putString("username", username).apply();

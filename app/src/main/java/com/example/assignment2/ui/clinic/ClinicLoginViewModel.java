@@ -6,7 +6,7 @@ import com.example.assignment2.database.ClinicDatabase;
 
 import java.util.ArrayList;
 
-public class ClinicViewModel extends ViewModel {
+public class ClinicLoginViewModel extends ViewModel {
 
     private ClinicDatabase clinicDB = new ClinicDatabase();
 
