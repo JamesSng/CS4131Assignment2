@@ -4,6 +4,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,15 +18,21 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.assignment2.AES;
+import com.example.assignment2.MainActivity;
 import com.example.assignment2.QRCodeScannerActivity;
 import com.example.assignment2.R;
+import com.example.assignment2.database.LogDatabase;
 import com.example.assignment2.database.PersonDatabase;
+import com.example.assignment2.model.LogEntry;
 import com.example.assignment2.model.Person;
 
 import java.time.ZonedDateTime;
@@ -38,17 +46,21 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
     private AdminStatusViewModel statusViewModel;
     private AdminLogViewModel logViewModel;
     private PersonDatabase db;
+    private NavController navController;
 
-    private String IC;
+    private String IC, username;
 
     private final int requestCode = 1;
 
     private static final int PERMISSION_REQUEST_CODE = 200;
 
+    private LogDatabase logDatabase;
+
     public static AdminStatusFragment newInstance() {
         return new AdminStatusFragment();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -56,8 +68,12 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
 
         TextView textView = root.findViewById(R.id.welcomeTextView);
 
+        username = getActivity().getSharedPreferences("username", Context.MODE_PRIVATE).getString("username", null);
+        textView.setText("Welcome, " + username);
 
-        NavController navController =
+        logDatabase = new LogDatabase();
+
+        navController =
                 ((NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment)).getNavController();
 
         root.findViewById(R.id.viewLogButton).setOnClickListener(v -> navController.navigate(R.id.action_adminStatusFragment_to_adminLogFragment));
@@ -115,16 +131,20 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
 
         if(db.getCurrentUser() == null) return;
 
+        String enter = "", vaccineStatus = "";
+
         if(statusViewModel.hasName(IC)){
             statusViewModel.removeName(IC);
             Toast.makeText(getContext(), "Checked out!", Toast.LENGTH_SHORT).show();
             Person person = db.getCurrentUser();
             switch(person.getVaccineStatus()){
                 case 0: case 1:
-                    logViewModel.addLog("exit", IC, date, "Unvaccinated");
+                    enter = "exit";
+                    vaccineStatus = "Unvaccinated";
                     break;
                 case 2: case 3:
-                    logViewModel.addLog("exit", IC, date, "Vaccinated");
+                    enter = "exit";
+                    vaccineStatus = "Vaccinated";
                     break;
             }
         } else {
@@ -133,13 +153,41 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
             Person person = db.getCurrentUser();
             switch(person.getVaccineStatus()){
                 case 0: case 1:
-                    logViewModel.addLog("entry", IC, date, "Unvaccinated");
+                    enter = "entry";
+                    vaccineStatus = "Unvaccinated";
                     break;
                 case 2: case 3:
-                    logViewModel.addLog("entry", IC, date, "Vaccinated");
+                    enter = "entry";
+                    vaccineStatus = "Vaccinated";
                     break;
             }
         }
+
+        logViewModel.addLog(enter, IC, date, vaccineStatus);
+        logDatabase.addLogs(new LogEntry(username, enter, IC, date, vaccineStatus));
+
+        Log.e("add log", username+" "+enter+" "+IC+" "+date+" "+vaccineStatus);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_admin, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.admin_logout:
+                getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
+                Toast.makeText(getContext(),"See you next time!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.adminFragment);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.assignment2.ui.person;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,9 +15,13 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.assignment2.AES;
 import com.example.assignment2.MainActivity;
@@ -31,6 +36,7 @@ public class PersonQrFragment extends Fragment {
 
     private PersonQrViewModel model;
     private ImageView qrImage;
+    private NavController navController;
 
     public static PersonQrFragment newInstance() {
         return new PersonQrFragment();
@@ -42,10 +48,10 @@ public class PersonQrFragment extends Fragment {
         View root = inflater.inflate(R.layout.person_qr_fragment, container, false);
         qrImage = root.findViewById(R.id.qrImage);
 
-        root.findViewById(R.id.toInfoButton).setOnClickListener(view -> {
-            NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
-            NavController navController = navHostFragment.getNavController();
+        NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
+        navController = navHostFragment.getNavController();
 
+        root.findViewById(R.id.toInfoButton).setOnClickListener(view -> {
             navController.navigate(R.id.action_personQrFragment_to_personInfoFragment);
         });
 
@@ -79,5 +85,25 @@ public class PersonQrFragment extends Fragment {
         qrCode.setImageBitmap(bmp);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_person, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.person_logout:
+                getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
+                Toast.makeText(getContext(),"See you next time!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.personFragment);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

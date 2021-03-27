@@ -50,8 +50,6 @@
                         android:fontFamily="@font/montserrat"
                         android:layout_gravity="end"/>
 
-                    <!-- ?? id for admin (autocompletetextview) -->
-
                 </TableRow>
 
                 <TableRow

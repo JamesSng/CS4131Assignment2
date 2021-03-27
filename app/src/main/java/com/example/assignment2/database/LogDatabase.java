@@ -19,7 +19,7 @@ public class LogDatabase {
 
 
     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("logs");
-    private ArrayList<LogEntry> ret;
+    private ArrayList<LogEntry> ret = new ArrayList<>();
 
     public void getLogs(String adminName, onResult result){
         ret.clear();
@@ -71,7 +71,7 @@ public class LogDatabase {
     }
 
     public interface onResult{
-        public void onResult(ArrayList<LogEntry> logs);
+        void onResult(ArrayList<LogEntry> logs);
     }
 
 }

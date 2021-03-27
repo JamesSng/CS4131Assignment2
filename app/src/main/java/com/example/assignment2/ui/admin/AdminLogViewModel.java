@@ -10,15 +10,19 @@ import java.util.ArrayList;
 
 public class AdminLogViewModel extends ViewModel {
 
-    private MutableLiveData<ArrayList<String>>
-            names = new MutableLiveData<>(new ArrayList<>()),
-            times = new MutableLiveData<>(new ArrayList<>()),
-            enter = new MutableLiveData<>(new ArrayList<>()),
-            vaccineStatuses = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<String>>
+            names = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<String>> times = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<String>> enter = new MutableLiveData<>(new ArrayList<>());
+    private final MutableLiveData<ArrayList<String>> vaccineStatuses = new MutableLiveData<>(new ArrayList<>());
 
-    private MutableLiveData<RecyclerAdapter> recyclerAdapter = new MutableLiveData<>(null);
+    private final MutableLiveData<RecyclerAdapter> recyclerAdapter = new MutableLiveData<>(null);
+
+    private String admin;
 
     public LiveData<RecyclerAdapter> getRecyclerAdapter(){ return recyclerAdapter; }
+
+    public void setAdmin(String admin){ this.admin = admin; }
 
     public void addLog(String enter_, String name, String time, String vaccineStatus){
         enter.getValue().add(0, enter_);

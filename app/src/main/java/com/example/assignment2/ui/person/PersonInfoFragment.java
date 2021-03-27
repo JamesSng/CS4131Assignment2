@@ -13,6 +13,9 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -55,6 +58,8 @@ public class PersonInfoFragment extends Fragment implements PersonDatabase.onRes
         return new PersonInfoFragment();
     }
 
+    private NavController navController;
+
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,7 +79,7 @@ public class PersonInfoFragment extends Fragment implements PersonDatabase.onRes
         statusInfoTV = root.findViewById(R.id.statusInfoTV);
 
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
-        NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
 
         root.findViewById(R.id.button).setOnClickListener(view -> {
             Log.e("switch", "to qr fragment");
@@ -201,7 +206,26 @@ public class PersonInfoFragment extends Fragment implements PersonDatabase.onRes
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_person, menu);
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.person_logout:
+                getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
+                Toast.makeText(getContext(),"See you next time!", Toast.LENGTH_SHORT).show();
+                navController.navigate(R.id.personFragment);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

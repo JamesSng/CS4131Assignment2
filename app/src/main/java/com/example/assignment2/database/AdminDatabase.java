@@ -7,12 +7,12 @@ import java.util.ArrayList;
 public class AdminDatabase {
 
     ArrayList<Admin> admins = new ArrayList<>();
+    ArrayList<String> names = new ArrayList<>();
     Admin currentAdmin;
 
     public static final int LOGIN_SUCCESSFUL = 0;
     public static final int INVALID_NAME = 1;
     public static final int INVALID_PASSWORD = 2;
-
     public int login(String username, String password){
         for (Admin admin: admins){
             if (admin.getUsername().equals(username)){
@@ -36,6 +36,9 @@ public class AdminDatabase {
             String[] details = admin.split(",");
             Admin a = new Admin(details[0], details[1]);
             admins.add(a);
+            names.add(details[0]);
         }
     }
+
+    public ArrayList<String> getNames(){ return names; }
 }

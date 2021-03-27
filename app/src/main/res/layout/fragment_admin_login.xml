@@ -42,19 +42,13 @@
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
-                    <!-- ?? id for admin (autocompletetextview) -->
-
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/usernameField"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:autofillHints=""
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:textSize="16sp"
+                        android:ems="9"
                         android:fontFamily="@font/montserrat"
-                        tools:ignore="LabelFor" />
+                        android:layout_gravity="end"/>
                 </TableRow>
 
                 <TableRow

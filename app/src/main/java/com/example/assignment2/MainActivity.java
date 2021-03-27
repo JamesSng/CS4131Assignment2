@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
         final int defaultVal = getResources().getInteger(R.integer.DEFAULT);
         int value = getSharedPreferences("started_before", Context.MODE_PRIVATE).getInt("started_before", defaultVal);
-        if(value == 0){
+        if (value == 0) {
             startActivity(new Intent(this, OnboardingActivity.class));
         } else {
             value = getSharedPreferences("logged_in", Context.MODE_PRIVATE).getInt("logged_in", defaultVal);
             username = getSharedPreferences("username", Context.MODE_PRIVATE).getString("username", null);
             Intent intent;
-            switch(value){
+            switch (value) {
                 case 0:
                     break;
                 case 1:
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     // login to admin
+                    getSharedPreferences("updated", Context.MODE_PRIVATE).edit().putString("updated", "no").apply();
                     navController.navigate(R.id.action_personFragment_to_adminFragment);
                     navController.navigate(R.id.action_adminFragment_to_adminStatusFragment);
                     break;
@@ -78,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String readFile(String filename) throws IOException{
+    public String readFile(String filename) throws IOException {
         InputStreamReader inputStreamReader = new InputStreamReader(getResources().getAssets().open(filename));
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         StringBuilder stringBuffer = new StringBuilder();
         String lines;
-        while ((lines = bufferedReader.readLine()) != null){
+        while ((lines = bufferedReader.readLine()) != null) {
             stringBuffer.append(lines).append("\n");
         }
         inputStreamReader.close();
@@ -92,27 +93,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
     }
 
-    public void onResult(){
+    public void onResult() {
 
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_person, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                Toast.makeText(this,"See you next time!", Toast.LENGTH_SHORT).show();
-                navController.navigate(R.id.personFragment);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
 

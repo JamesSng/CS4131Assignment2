@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import java.io.IOException;
 public class AdminLoginFragment extends Fragment {
 
     private AdminLoginViewModel adminLoginViewModel;
+    private String username = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +41,14 @@ public class AdminLoginFragment extends Fragment {
         }
 
         View root = inflater.inflate(R.layout.fragment_admin_login, container, false);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, adminLoginViewModel.getDB().getNames());
+        AutoCompleteTextView usernameField = root.findViewById(R.id.usernameField);
+        usernameField.setAdapter(adapter);
+        usernameField.setOnItemClickListener((parent, view1, position, id) -> {
+            username = (String) parent.getItemAtPosition(position);
+        });
 
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment);
         NavController navController = navHostFragment.getNavController();
@@ -62,7 +73,6 @@ public class AdminLoginFragment extends Fragment {
     public void handleLogin(View view){
         EditText passwordField = getView().findViewById(R.id.passwordField);
         String password = passwordField.getText().toString();
-        String username = ((EditText) getView().findViewById(R.id.usernameField)).getText().toString();
         if (username.length()==0){
             Toast.makeText(getContext(), "Please enter a username!", Toast.LENGTH_LONG).show();
             return;
