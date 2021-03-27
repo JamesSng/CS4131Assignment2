@@ -11,22 +11,22 @@
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_workplace" />
+        android:src="@drawable/phonewithqr" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Add a few names!"
+        android:text="Display your QR code"
         app:fontFamily="@font/montserrat"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="A list of names will show below"
+        android:text="An admin or clinic will help you check in or update your vaccination status"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textStyle="bold"
         app:fontFamily="@font/montserrat" />

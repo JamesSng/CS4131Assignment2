@@ -37,11 +37,12 @@ import com.example.assignment2.model.Person;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import static android.Manifest.permission.CAMERA;
 import static android.app.Activity.RESULT_OK;
 
-public class AdminStatusFragment extends Fragment implements PersonDatabase.onResult {
+public class AdminStatusFragment extends Fragment implements PersonDatabase.onResult, LogDatabase.onResult {
 
     private AdminStatusViewModel statusViewModel;
     private AdminLogViewModel logViewModel;
@@ -56,6 +57,8 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
 
     private LogDatabase logDatabase;
 
+    private View root;
+
     public static AdminStatusFragment newInstance() {
         return new AdminStatusFragment();
     }
@@ -64,7 +67,7 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.admin_status_fragment, container, false);
+        root = inflater.inflate(R.layout.admin_status_fragment, container, false);
 
         TextView textView = root.findViewById(R.id.welcomeTextView);
 
@@ -72,6 +75,8 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
         textView.setText("Welcome, " + username);
 
         logDatabase = new LogDatabase();
+
+        logDatabase.getLogs(username, this);
 
         navController =
                 ((NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mainNavHostFragment)).getNavController();
@@ -89,11 +94,22 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
         return root;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        statusViewModel = new ViewModelProvider(requireActivity()).get(AdminStatusViewModel.class);
+        statusViewModel = new ViewModelProvider(this).get(AdminStatusViewModel.class);
         logViewModel = new ViewModelProvider(requireActivity()).get(AdminLogViewModel.class);
+
+        statusViewModel.getNames().observe(getViewLifecycleOwner(), names -> {
+            TextView textView = root.findViewById(R.id.personCountTV);
+            textView.setText(""+names.size());
+        });
+
+        statusViewModel.getUnvaccinated().observe(getViewLifecycleOwner(), unvaccinated -> {
+            TextView textView = root.findViewById(R.id.unvaccinatedCountTV);
+            textView.setText(""+unvaccinated);
+        });
     }
 
     private boolean checkPermission(){
@@ -124,6 +140,7 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
         if(IC != null) db.setCurrentUser(IC, this);
     }
 
+    @SuppressLint("SetTextI18n")
     public void onResult(){
         ZonedDateTime now = ZonedDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss");
@@ -141,6 +158,7 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
                 case 0: case 1:
                     enter = "exit";
                     vaccineStatus = "Unvaccinated";
+                    statusViewModel.removeUnvaccinated();
                     break;
                 case 2: case 3:
                     enter = "exit";
@@ -155,6 +173,7 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
                 case 0: case 1:
                     enter = "entry";
                     vaccineStatus = "Unvaccinated";
+                    statusViewModel.addUnvaccinated();
                     break;
                 case 2: case 3:
                     enter = "entry";
@@ -167,6 +186,34 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
         logDatabase.addLogs(new LogEntry(username, enter, IC, date, vaccineStatus));
 
         Log.e("add log", username+" "+enter+" "+IC+" "+date+" "+vaccineStatus);
+        TextView textView = root.findViewById(R.id.personCountTV);
+        textView.setText(""+statusViewModel.getNames().getValue().size());
+
+        textView = root.findViewById(R.id.unvaccinatedCountTV);
+        textView.setText(""+statusViewModel.getUnvaccinated().getValue());
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onResult(ArrayList<LogEntry> logs){
+        for(int i=0;i<logs.size();++i){
+            if(logs.get(i).getEnter().equals("entry")){
+                statusViewModel.addName(logs.get(i).getName());
+                Log.e("entry",logs.get(i).getName());
+                if(logs.get(i).getVaccineStatus().equals("Unvaccinated")) statusViewModel.addUnvaccinated();
+            } else {
+                statusViewModel.removeName(logs.get(i).getName());
+                Log.e("exit",logs.get(i).getName());
+                if(logs.get(i).getVaccineStatus().equals("Unvaccinated")) statusViewModel.removeUnvaccinated();
+            }
+
+            Log.e("person count", ""+statusViewModel.getNames().getValue().size());
+
+            TextView textView = root.findViewById(R.id.personCountTV);
+            textView.setText(""+statusViewModel.getNames().getValue().size());
+
+            textView = root.findViewById(R.id.unvaccinatedCountTV);
+            textView.setText(""+statusViewModel.getUnvaccinated().getValue());
+        }
     }
 
     @Override
@@ -185,6 +232,7 @@ public class AdminStatusFragment extends Fragment implements PersonDatabase.onRe
             case R.id.admin_logout:
                 getActivity().getSharedPreferences("logged_in", Context.MODE_PRIVATE).edit().putInt("logged_in", 0).apply();
                 Toast.makeText(getContext(),"See you next time!", Toast.LENGTH_SHORT).show();
+                getActivity().getSharedPreferences("updated", Context.MODE_PRIVATE).edit().putString("updated", "no").apply();
                 navController.navigate(R.id.adminFragment);
                 break;
         }

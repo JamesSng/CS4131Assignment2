@@ -11,13 +11,13 @@
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:layout_gravity="center"
-        android:src="@drawable/phoneshaking" />
+        android:src="@drawable/viewaccount" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Shake your phone!"
+        android:text="View your account"
         app:fontFamily="@font/montserrat"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Each shake generates a random name"
+        android:text="Know your vaccination status"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textStyle="bold"
         app:fontFamily="@font/montserrat" />
