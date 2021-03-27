@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class LogDatabase {
 
+
     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("logs");
     private ArrayList<LogEntry> ret;
 
